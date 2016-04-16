@@ -448,9 +448,9 @@ public void sum_false(){
 public void move_score(){
    if ((note_x>=0) &&(note_y>=0)) {
     if ((move == true)) {
-      moving+=0.04f;
+      moving+=0.9f;
     }
-    if (moving >= 3.35f) {
+    if (moving >= 12.0f) {
       moving = 0.0f;
       move = false;
     }

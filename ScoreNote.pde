@@ -161,9 +161,9 @@ void sum_false(){
 void move_score(){
    if ((note_x>=0) &&(note_y>=0)) {
     if ((move == true)) {
-      moving+=0.04;
+      moving+=0.9;
     }
-    if (moving >= 3.35) {
+    if (moving >= 12.0) {
       moving = 0.0;
       move = false;
     }
