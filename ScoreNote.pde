@@ -69,20 +69,26 @@ public void addNote(int n)
   }
 
   public int getNote(int m) {
-    return this.played_note.get(m);
+     try{
+      return this.played_note.get(m);
+      }
+      catch (ArrayIndexOutOfBoundsException e){
+       return this.played_note.get(0);
+      }
+    
   }
 
   void blue_triangle() {//水色▼の位置と形を管理  
     noStroke();
     fill(186, 233, 255);
     textSize(25);
-    text("▼", x-20, 67+212*note_y, 40, 40);
+    text("▼", x-20, 250+173*note_y, 40, 40);
     text("▼", 210, 38, 40, 40);
   }
 
 void real_time_color(){//リアルタイムで変化する音の色を表示
   if (note[note_y][note_x].played_note.size()>=1) {
-    col[note[note_y][note_x].getNote(note[note_y][note_x].played_note.size()-1)].color_rect();
+      col[note[note_y][note_x].getNote(note[note_y][note_x].played_note.size()-1)].color_rect();
     rect(200, 160, 30, 30);
   }
 }
@@ -108,16 +114,16 @@ void color_example(){//右上の色の見本を表示
         fill(87, 175, 79);
       }
       
-      rect(note[note_y][i].getX(), 250+212*note_y, 20, 20);//音のずれを表示
+      rect(note[note_y][i].getX(), 360+212*note_y, 20, 20);//音のずれを表示
     }
     for (int j = 0; j <= note_y-1; j++) {
-      for (int i = 0; i < 8; i++) {//現在演奏しているよりも前の色表示
+      for (int i = 0; i < 14; i++) {//現在演奏しているよりも前の色表示
         try{
         col[note[j][i].getNote(0)].color_rect();//最初の音のずれの色を採用
       }catch (NullPointerException e){
         fill(87, 175, 79);
       }
-        rect(note[note_y][i].getX(), 250+212*j, 20, 20);//音のずれを表示
+        rect(note[note_y][i].getX(), 360+212*j, 20, 20);//音のずれを表示
       }
     }
   }
@@ -129,15 +135,15 @@ void color_example(){//右上の色の見本を表示
       if (note[note_y][i].judge>=1) {
         fill(255);
         textSize(25);
-        text("×", note[note_y][i].getX(), 67+212*note_y, 40, 40);
+        text("×", note[note_y][i].getX(), 250+212*note_y, 40, 40);
       }
     }
     for (int j = 0; j <= note_y-1; j++) {
-      for (int i = 0; i < 8; i++) {//現在演奏しているよりも前の色表示
+      for (int i = 0; i < 14; i++) {//現在演奏しているよりも前の色表示
        if (note[j][i].judge>=1) {
           fill(255);
           textSize(25);
-          text("×", note[note_y][i].getX(), 67+212*j, 40, 40);
+          text("×", note[note_y][i].getX(), 250+212*j, 40, 40);
         }
       }
     }
@@ -163,14 +169,14 @@ void move_score(){
     if ((move == true)) {
       moving+=0.9;
     }
-    if (moving >= 12.0) {
+    if (moving >= 12.58) {
       moving = 0.0;
       move = false;
     }
   }
   score_top = score_top - moving;
   
-  image(part_score, score_top, 50, 3990, 148);//移動する楽譜の第1連
+  image(part_score, score_top, 50, 3778, 148);//移動する楽譜の第1連
   noStroke();
   fill(0);
   rect(0,40,70,218);

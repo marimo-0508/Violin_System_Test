@@ -9,7 +9,7 @@ import processing.opengl.*;
 PImage score, part_score, left_grad, right_grad;
 
 //主に楽譜の音を管理する用
-ScoreNote[][]note = new ScoreNote[4][8];
+ScoreNote[][]note = new ScoreNote[3][14];
 int note_y, note_x = 0;
 boolean move = false;
 float score_top = 90.0;
@@ -82,41 +82,53 @@ void setup() {
   }
 
 //note[note_y][note_x] = new Note(all_score_PositionX, ×の初期設定, NoteName);
- note[0][0] = new ScoreNote(919, 0, 70);
-  note[0][1] = new ScoreNote(1044, 0, 70);
-  note[0][2] = new ScoreNote(1172, 0, 70);
-  note[0][3] = new ScoreNote(1299, 0, 70);
-  note[0][4] = new ScoreNote(1443, 0, 70);
-  note[0][5] = new ScoreNote(1577, 0, 70);
-  note[0][6] = new ScoreNote(1712, 0, 70);
-  note[0][7] = new ScoreNote(1846, 0, 70);
+ note[0][0] = new ScoreNote(913, 0, 69);
+  note[0][1] = new ScoreNote(974, 0, 69);
+  note[0][2] = new ScoreNote(1034, 0, 76);
+  note[0][3] = new ScoreNote(1094, 0, 76);
+  note[0][4] = new ScoreNote(1172, 0, 78);
+  note[0][5] = new ScoreNote(1235, 0, 78);
+  note[0][6] = new ScoreNote(1304, 0, 76);
 
-  note[1][0] = new ScoreNote(919, 0, 70);
-  note[1][1] = new ScoreNote(1044, 0, 70);
-  note[1][2] = new ScoreNote(1172, 0, 70);
-  note[1][3] = new ScoreNote(1299, 0, 70);
-  note[1][4] = new ScoreNote(1443, 0, 70);
-  note[1][5] = new ScoreNote(1577, 0, 70);
-  note[1][6] = new ScoreNote(1712, 0, 70);
-  note[1][7] = new ScoreNote(1846, 0, 70);
+  note[0][7] = new ScoreNote(1425, 0, 74);
+  note[0][8] = new ScoreNote(1487, 0, 74);
+  note[0][9] = new ScoreNote(1554, 0, 73);
+  note[0][10] = new ScoreNote(1616, 0, 73);
+  note[0][11] = new ScoreNote(1696, 0, 71);
+  note[0][12] = new ScoreNote(1758, 0, 71);
+  note[0][13] = new ScoreNote(1825, 0, 69);
 
-  note[2][0] = new ScoreNote(919, 0, 70);
-  note[2][1] = new ScoreNote(1044, 0, 70);
-  note[2][2] = new ScoreNote(1172, 0, 70);
-  note[2][3] = new ScoreNote(1299, 0, 70);
-  note[2][4] = new ScoreNote(1443, 0, 70);
-  note[2][5] = new ScoreNote(1577, 0, 70);
-  note[2][6] = new ScoreNote(1712, 0, 70);
-  note[2][7] = new ScoreNote(1846, 0, 70);
+  note[1][0] = new ScoreNote(913, 0, 76);
+  note[1][1] = new ScoreNote(974, 0, 76);
+  note[1][2] = new ScoreNote(1034, 0, 74);
+  note[1][3] = new ScoreNote(1094, 0, 74);
+  note[1][4] = new ScoreNote(1172, 0, 73);
+  note[1][5] = new ScoreNote(1235, 0, 73);
+  note[1][6] = new ScoreNote(1304, 0, 71);
 
-  note[3][0] = new ScoreNote(919, 0, 70);
-  note[3][1] = new ScoreNote(1044, 0, 70);
-  note[3][2] = new ScoreNote(1172, 0, 70);
-  note[3][3] = new ScoreNote(1299, 0, 70);
-  note[3][4] = new ScoreNote(1443, 0, 70);
-  note[3][5] = new ScoreNote(1577, 0, 70);
-  note[3][6] = new ScoreNote(1712, 0, 70);
-  note[3][7] = new ScoreNote(1846, 0, 70);
+  note[1][7] = new ScoreNote(1425, 0, 76);
+  note[1][8] = new ScoreNote(1487, 0, 76);
+  note[1][9] = new ScoreNote(1554, 0, 74);
+  note[1][10] = new ScoreNote(1616, 0, 74);
+  note[1][11] = new ScoreNote(1696, 0, 73);
+  note[1][12] = new ScoreNote(1758, 0, 73);
+  note[1][13] = new ScoreNote(1825, 0, 71);
+
+  note[2][0] = new ScoreNote(913, 0, 69);
+  note[2][1] = new ScoreNote(974, 0, 69);
+  note[2][2] = new ScoreNote(1034, 0, 76);
+  note[2][3] = new ScoreNote(1094, 0, 76);
+  note[2][4] = new ScoreNote(1172, 0, 78);
+  note[2][5] = new ScoreNote(1235, 0, 78);
+  note[2][6] = new ScoreNote(1304, 0, 76);
+  
+  note[2][7] = new ScoreNote(1425, 0, 74);
+  note[2][8] = new ScoreNote(1487, 0, 74);
+  note[2][9] = new ScoreNote(1554, 0, 73);
+  note[2][10] = new ScoreNote(1616, 0, 73);
+  note[2][11] = new ScoreNote(1696, 0, 71);
+  note[2][12] = new ScoreNote(1758, 0, 71);
+  note[2][13] = new ScoreNote(1825, 0, 69);
 
   //midibusを管理
   myBus.sendNoteOn(channel, pitch, velocity); // Send a Midi noteOn
@@ -208,10 +220,10 @@ if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
     if ((int)(data[1] & 0xFF)==(note[note_y][note_x].Number())) {
       note_x++;
       move = true;
-      if (note_x!=0&&note_x==8) {
+      if (note_x!=0&&note_x==14) {
         note_y++;
         note_x=0;
-        if (note_y>3) {
+        if (note_y>2) {
           note_y=0;
         }
       }
@@ -222,7 +234,7 @@ if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
     if(flag == true){
     note_number.add(Integer.toString(note_num));
     now_number.add(Integer.toString(now_num));
-    count.add(""+mill);
+    count.add(hour() + ":" + second() + ":" + minute());
     note_velocity.add(Integer.toString(note_vel));
     pitche_bend.add(Integer.toString(notebus_different));
   }
@@ -236,4 +248,17 @@ void captureEvent(Capture video) {
 }
   void mouseClicked(){
     println("mouseX:" + mouseX + "," + "mouseY:" + mouseY);
-  }
+}
+
+void keyPressed() {
+  if (key == 's' || key=='S') { 
+  //txtファイル用
+  //それぞれの行に文字列をファイルへ書き込む。
+  for(int i = 0; i < count.size() ; i++){
+  //result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + tab_number.get(i) + "," + point.x + "," + point.y + "," + count.get(i));
+  result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + count.get(i));
+}
+  saveStrings("Violin_System_Test.txt", (String[])result.toArray(new String[result.size()-1])); 
+}
+}
+

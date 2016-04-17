@@ -32,7 +32,7 @@ public class Violin_System_Test extends PApplet {
 PImage score, part_score, left_grad, right_grad;
 
 //\u4e3b\u306b\u697d\u8b5c\u306e\u97f3\u3092\u7ba1\u7406\u3059\u308b\u7528
-ScoreNote[][]note = new ScoreNote[4][8];
+ScoreNote[][]note = new ScoreNote[3][14];
 int note_y, note_x = 0;
 boolean move = false;
 float score_top = 90.0f;
@@ -105,41 +105,53 @@ public void setup() {
   }
 
 //note[note_y][note_x] = new Note(all_score_PositionX, \u00d7\u306e\u521d\u671f\u8a2d\u5b9a, NoteName);
- note[0][0] = new ScoreNote(919, 0, 70);
-  note[0][1] = new ScoreNote(1044, 0, 70);
-  note[0][2] = new ScoreNote(1172, 0, 70);
-  note[0][3] = new ScoreNote(1299, 0, 70);
-  note[0][4] = new ScoreNote(1443, 0, 70);
-  note[0][5] = new ScoreNote(1577, 0, 70);
-  note[0][6] = new ScoreNote(1712, 0, 70);
-  note[0][7] = new ScoreNote(1846, 0, 70);
+ note[0][0] = new ScoreNote(913, 0, 69);
+  note[0][1] = new ScoreNote(974, 0, 69);
+  note[0][2] = new ScoreNote(1034, 0, 76);
+  note[0][3] = new ScoreNote(1094, 0, 76);
+  note[0][4] = new ScoreNote(1172, 0, 78);
+  note[0][5] = new ScoreNote(1235, 0, 78);
+  note[0][6] = new ScoreNote(1304, 0, 76);
 
-  note[1][0] = new ScoreNote(919, 0, 70);
-  note[1][1] = new ScoreNote(1044, 0, 70);
-  note[1][2] = new ScoreNote(1172, 0, 70);
-  note[1][3] = new ScoreNote(1299, 0, 70);
-  note[1][4] = new ScoreNote(1443, 0, 70);
-  note[1][5] = new ScoreNote(1577, 0, 70);
-  note[1][6] = new ScoreNote(1712, 0, 70);
-  note[1][7] = new ScoreNote(1846, 0, 70);
+  note[0][7] = new ScoreNote(1425, 0, 74);
+  note[0][8] = new ScoreNote(1487, 0, 74);
+  note[0][9] = new ScoreNote(1554, 0, 73);
+  note[0][10] = new ScoreNote(1616, 0, 73);
+  note[0][11] = new ScoreNote(1696, 0, 71);
+  note[0][12] = new ScoreNote(1758, 0, 71);
+  note[0][13] = new ScoreNote(1825, 0, 69);
 
-  note[2][0] = new ScoreNote(919, 0, 70);
-  note[2][1] = new ScoreNote(1044, 0, 70);
-  note[2][2] = new ScoreNote(1172, 0, 70);
-  note[2][3] = new ScoreNote(1299, 0, 70);
-  note[2][4] = new ScoreNote(1443, 0, 70);
-  note[2][5] = new ScoreNote(1577, 0, 70);
-  note[2][6] = new ScoreNote(1712, 0, 70);
-  note[2][7] = new ScoreNote(1846, 0, 70);
+  note[1][0] = new ScoreNote(913, 0, 76);
+  note[1][1] = new ScoreNote(974, 0, 76);
+  note[1][2] = new ScoreNote(1034, 0, 74);
+  note[1][3] = new ScoreNote(1094, 0, 74);
+  note[1][4] = new ScoreNote(1172, 0, 73);
+  note[1][5] = new ScoreNote(1235, 0, 73);
+  note[1][6] = new ScoreNote(1304, 0, 71);
 
-  note[3][0] = new ScoreNote(919, 0, 70);
-  note[3][1] = new ScoreNote(1044, 0, 70);
-  note[3][2] = new ScoreNote(1172, 0, 70);
-  note[3][3] = new ScoreNote(1299, 0, 70);
-  note[3][4] = new ScoreNote(1443, 0, 70);
-  note[3][5] = new ScoreNote(1577, 0, 70);
-  note[3][6] = new ScoreNote(1712, 0, 70);
-  note[3][7] = new ScoreNote(1846, 0, 70);
+  note[1][7] = new ScoreNote(1425, 0, 76);
+  note[1][8] = new ScoreNote(1487, 0, 76);
+  note[1][9] = new ScoreNote(1554, 0, 74);
+  note[1][10] = new ScoreNote(1616, 0, 74);
+  note[1][11] = new ScoreNote(1696, 0, 73);
+  note[1][12] = new ScoreNote(1758, 0, 73);
+  note[1][13] = new ScoreNote(1825, 0, 71);
+
+  note[2][0] = new ScoreNote(913, 0, 69);
+  note[2][1] = new ScoreNote(974, 0, 69);
+  note[2][2] = new ScoreNote(1034, 0, 76);
+  note[2][3] = new ScoreNote(1094, 0, 76);
+  note[2][4] = new ScoreNote(1172, 0, 78);
+  note[2][5] = new ScoreNote(1235, 0, 78);
+  note[2][6] = new ScoreNote(1304, 0, 76);
+  
+  note[2][7] = new ScoreNote(1425, 0, 74);
+  note[2][8] = new ScoreNote(1487, 0, 74);
+  note[2][9] = new ScoreNote(1554, 0, 73);
+  note[2][10] = new ScoreNote(1616, 0, 73);
+  note[2][11] = new ScoreNote(1696, 0, 71);
+  note[2][12] = new ScoreNote(1758, 0, 71);
+  note[2][13] = new ScoreNote(1825, 0, 69);
 
   //midibus\u3092\u7ba1\u7406
   myBus.sendNoteOn(channel, pitch, velocity); // Send a Midi noteOn
@@ -231,10 +243,10 @@ if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
     if ((int)(data[1] & 0xFF)==(note[note_y][note_x].Number())) {
       note_x++;
       move = true;
-      if (note_x!=0&&note_x==8) {
+      if (note_x!=0&&note_x==14) {
         note_y++;
         note_x=0;
-        if (note_y>3) {
+        if (note_y>2) {
           note_y=0;
         }
       }
@@ -245,7 +257,7 @@ if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
     if(flag == true){
     note_number.add(Integer.toString(note_num));
     now_number.add(Integer.toString(now_num));
-    count.add(""+mill);
+    count.add(hour() + ":" + second() + ":" + minute());
     note_velocity.add(Integer.toString(note_vel));
     pitche_bend.add(Integer.toString(notebus_different));
   }
@@ -259,7 +271,20 @@ public void captureEvent(Capture video) {
 }
   public void mouseClicked(){
     println("mouseX:" + mouseX + "," + "mouseY:" + mouseY);
-  }
+}
+
+public void keyPressed() {
+  if (key == 's' || key=='S') { 
+  //txt\u30d5\u30a1\u30a4\u30eb\u7528
+  //\u305d\u308c\u305e\u308c\u306e\u884c\u306b\u6587\u5b57\u5217\u3092\u30d5\u30a1\u30a4\u30eb\u3078\u66f8\u304d\u8fbc\u3080\u3002
+  for(int i = 0; i < count.size() ; i++){
+  //result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + tab_number.get(i) + "," + point.x + "," + point.y + "," + count.get(i));
+  result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + count.get(i));
+}
+  saveStrings("Violin_System_Test.txt", (String[])result.toArray(new String[result.size()-1])); 
+}
+}
+
 class Color{ //\u97f3\u306e\u5909\u5316\u306e\u8272\u3092\u793a\u3059\u30af\u30e9\u30b9
   private int r;
   private int g;
@@ -356,20 +381,26 @@ public void addNote(int n)
   }
 
   public int getNote(int m) {
-    return this.played_note.get(m);
+     try{
+      return this.played_note.get(m);
+      }
+      catch (ArrayIndexOutOfBoundsException e){
+       return this.played_note.get(0);
+      }
+    
   }
 
   public void blue_triangle() {//\u6c34\u8272\u25bc\u306e\u4f4d\u7f6e\u3068\u5f62\u3092\u7ba1\u7406  
     noStroke();
     fill(186, 233, 255);
     textSize(25);
-    text("\u25bc", x-20, 67+212*note_y, 40, 40);
+    text("\u25bc", x-20, 250+173*note_y, 40, 40);
     text("\u25bc", 210, 38, 40, 40);
   }
 
 public void real_time_color(){//\u30ea\u30a2\u30eb\u30bf\u30a4\u30e0\u3067\u5909\u5316\u3059\u308b\u97f3\u306e\u8272\u3092\u8868\u793a
   if (note[note_y][note_x].played_note.size()>=1) {
-    col[note[note_y][note_x].getNote(note[note_y][note_x].played_note.size()-1)].color_rect();
+      col[note[note_y][note_x].getNote(note[note_y][note_x].played_note.size()-1)].color_rect();
     rect(200, 160, 30, 30);
   }
 }
@@ -395,16 +426,16 @@ public void color_example(){//\u53f3\u4e0a\u306e\u8272\u306e\u898b\u672c\u3092\u
         fill(87, 175, 79);
       }
       
-      rect(note[note_y][i].getX(), 250+212*note_y, 20, 20);//\u97f3\u306e\u305a\u308c\u3092\u8868\u793a
+      rect(note[note_y][i].getX(), 360+212*note_y, 20, 20);//\u97f3\u306e\u305a\u308c\u3092\u8868\u793a
     }
     for (int j = 0; j <= note_y-1; j++) {
-      for (int i = 0; i < 8; i++) {//\u73fe\u5728\u6f14\u594f\u3057\u3066\u3044\u308b\u3088\u308a\u3082\u524d\u306e\u8272\u8868\u793a
+      for (int i = 0; i < 14; i++) {//\u73fe\u5728\u6f14\u594f\u3057\u3066\u3044\u308b\u3088\u308a\u3082\u524d\u306e\u8272\u8868\u793a
         try{
         col[note[j][i].getNote(0)].color_rect();//\u6700\u521d\u306e\u97f3\u306e\u305a\u308c\u306e\u8272\u3092\u63a1\u7528
       }catch (NullPointerException e){
         fill(87, 175, 79);
       }
-        rect(note[note_y][i].getX(), 250+212*j, 20, 20);//\u97f3\u306e\u305a\u308c\u3092\u8868\u793a
+        rect(note[note_y][i].getX(), 360+212*j, 20, 20);//\u97f3\u306e\u305a\u308c\u3092\u8868\u793a
       }
     }
   }
@@ -416,15 +447,15 @@ public void color_example(){//\u53f3\u4e0a\u306e\u8272\u306e\u898b\u672c\u3092\u
       if (note[note_y][i].judge>=1) {
         fill(255);
         textSize(25);
-        text("\u00d7", note[note_y][i].getX(), 67+212*note_y, 40, 40);
+        text("\u00d7", note[note_y][i].getX(), 250+212*note_y, 40, 40);
       }
     }
     for (int j = 0; j <= note_y-1; j++) {
-      for (int i = 0; i < 8; i++) {//\u73fe\u5728\u6f14\u594f\u3057\u3066\u3044\u308b\u3088\u308a\u3082\u524d\u306e\u8272\u8868\u793a
+      for (int i = 0; i < 14; i++) {//\u73fe\u5728\u6f14\u594f\u3057\u3066\u3044\u308b\u3088\u308a\u3082\u524d\u306e\u8272\u8868\u793a
        if (note[j][i].judge>=1) {
           fill(255);
           textSize(25);
-          text("\u00d7", note[note_y][i].getX(), 67+212*j, 40, 40);
+          text("\u00d7", note[note_y][i].getX(), 250+212*j, 40, 40);
         }
       }
     }
@@ -450,14 +481,14 @@ public void move_score(){
     if ((move == true)) {
       moving+=0.9f;
     }
-    if (moving >= 12.0f) {
+    if (moving >= 12.58f) {
       moving = 0.0f;
       move = false;
     }
   }
   score_top = score_top - moving;
   
-  image(part_score, score_top, 50, 3990, 148);//\u79fb\u52d5\u3059\u308b\u697d\u8b5c\u306e\u7b2c1\u9023
+  image(part_score, score_top, 50, 3778, 148);//\u79fb\u52d5\u3059\u308b\u697d\u8b5c\u306e\u7b2c1\u9023
   noStroke();
   fill(0);
   rect(0,40,70,218);
