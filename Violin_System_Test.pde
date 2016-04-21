@@ -5,6 +5,8 @@ import javax.sound.midi.ShortMessage;
 import processing.video.*;  //ビデオライブラリをインポート
 import processing.opengl.*;
 
+Layout layout = new Layout();
+
 //楽譜
 PImage score, part_score, left_grad, right_grad;
 
@@ -32,15 +34,16 @@ int note_vel = 0;//ベロシティ
 
 //色を管理する用
 Color []col = new Color[22];//色を22色の配列で管理
-int []r = { 0,  38,  65, 112,  38, 131, 160,  82,   9,  29,  36,
-           87, 111, 211, 248, 245, 244, 243, 246, 238, 234, 255
-           };
-int []g = {  0,  92, 131, 160, 187, 206, 213, 186, 127, 117, 155, 
-	       175, 189, 227, 229, 211, 161, 162, 189, 129,  93, 0
-           };
+int []r = { 0, 38, 65, 112, 38, 131, 160, 82, 9, 29, 36, 
+  87, 111, 211, 248, 245, 244, 243, 246, 238, 234, 255
+};
+int []g = {  0, 92, 131, 160, 187, 206, 213, 186, 127, 117, 155, 
+  175, 189, 227, 229, 211, 161, 162, 189, 129, 93, 0
+};
 int []b = {255, 170, 197, 214, 238, 237, 205, 155, 93, 57, 58, 
-           79, 105, 142, 141,  60,  55, 134, 187, 127, 87, 0
-	       };
+  79, 105, 142, 141, 60, 55, 134, 187, 127, 87, 0
+};
+
 
 //webカメラ用
 Capture video;  //Capture型の変数videoを宣言
@@ -66,69 +69,71 @@ void setup() {
   MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
   myBus = new MidiBus(this, 0, 0); // Create a new MidiBus object
 
- //カメラの準備
-  video = new Capture(this, 640, 540,"USB_Camera");  //カメラからのキャプチャーをおこなうための変数を設定
-  video.start();  //Processing ver.2.0以上はこのコードが必要
+  //カメラの準備
+  String[] cams = Capture.list();
+  video = new Capture(this, cams[0]);
+  video.start();
 
- //画像を用意
+
+  //画像を用意
   score = loadImage("star.png");
   part_score = loadImage("part_star.png");
   left_grad = loadImage("left_grad.png"); //左用グラデを用意
   right_grad = loadImage("right_grad.png"); //右用グラデを用意
 
   //col[number] = new Color(R, G, B)
-  for(int i = 0; i < 22 ; i++){
-  	col[i] = new Color(r[i], g[i], b[i]);
+  for (int i = 0; i < 22; i++) {
+    col[i] = new Color(r[i], g[i], b[i]);
   }
 
-//note[note_y][note_x] = new Note(all_score_PositionX, ×の初期設定, NoteName);
- note[0][0] = new ScoreNote(913, 0, 69);
-  note[0][1] = new ScoreNote(974, 0, 69);
-  note[0][2] = new ScoreNote(1034, 0, 76);
-  note[0][3] = new ScoreNote(1094, 0, 76);
-  note[0][4] = new ScoreNote(1172, 0, 78);
-  note[0][5] = new ScoreNote(1235, 0, 78);
-  note[0][6] = new ScoreNote(1304, 0, 76);
+  //note[note_y][note_x] = new Note(PositionX, NoteName);
+  note[0][0] = new ScoreNote(913, 69);
+  note[0][1] = new ScoreNote(974, 69);
+  note[0][2] = new ScoreNote(1034, 76);
+  note[0][3] = new ScoreNote(1094, 76);
+  note[0][4] = new ScoreNote(1172, 78);
+  note[0][5] = new ScoreNote(1235, 78);
+  note[0][6] = new ScoreNote(1304, 76);
 
-  note[0][7] = new ScoreNote(1425, 0, 74);
-  note[0][8] = new ScoreNote(1487, 0, 74);
-  note[0][9] = new ScoreNote(1554, 0, 73);
-  note[0][10] = new ScoreNote(1616, 0, 73);
-  note[0][11] = new ScoreNote(1696, 0, 71);
-  note[0][12] = new ScoreNote(1758, 0, 71);
-  note[0][13] = new ScoreNote(1825, 0, 69);
+  note[0][7] = new ScoreNote(1425, 74);
+  note[0][8] = new ScoreNote(1487, 74);
+  note[0][9] = new ScoreNote(1554, 73);
+  note[0][10] = new ScoreNote(1616, 73);
+  note[0][11] = new ScoreNote(1696, 71);
+  note[0][12] = new ScoreNote(1758, 71);
+  note[0][13] = new ScoreNote(1825, 69);
 
-  note[1][0] = new ScoreNote(913, 0, 76);
-  note[1][1] = new ScoreNote(974, 0, 76);
-  note[1][2] = new ScoreNote(1034, 0, 74);
-  note[1][3] = new ScoreNote(1094, 0, 74);
-  note[1][4] = new ScoreNote(1172, 0, 73);
-  note[1][5] = new ScoreNote(1235, 0, 73);
-  note[1][6] = new ScoreNote(1304, 0, 71);
+  note[1][0] = new ScoreNote(913, 76);
+  note[1][1] = new ScoreNote(974, 76);
+  note[1][2] = new ScoreNote(1034, 74);
+  note[1][3] = new ScoreNote(1094, 74);
+  note[1][4] = new ScoreNote(1172, 73);
+  note[1][5] = new ScoreNote(1235, 73);
+  note[1][6] = new ScoreNote(1304, 71);
 
-  note[1][7] = new ScoreNote(1425, 0, 76);
-  note[1][8] = new ScoreNote(1487, 0, 76);
-  note[1][9] = new ScoreNote(1554, 0, 74);
-  note[1][10] = new ScoreNote(1616, 0, 74);
-  note[1][11] = new ScoreNote(1696, 0, 73);
-  note[1][12] = new ScoreNote(1758, 0, 73);
-  note[1][13] = new ScoreNote(1825, 0, 71);
+  note[1][7] = new ScoreNote(1425, 76);
+  note[1][8] = new ScoreNote(1487, 76);
+  note[1][9] = new ScoreNote(1554, 74);
+  note[1][10] = new ScoreNote(1616, 74);
+  note[1][11] = new ScoreNote(1696, 73);
+  note[1][12] = new ScoreNote(1758, 73);
+  note[1][13] = new ScoreNote(1825, 71);
 
-  note[2][0] = new ScoreNote(913, 0, 69);
-  note[2][1] = new ScoreNote(974, 0, 69);
-  note[2][2] = new ScoreNote(1034, 0, 76);
-  note[2][3] = new ScoreNote(1094, 0, 76);
-  note[2][4] = new ScoreNote(1172, 0, 78);
-  note[2][5] = new ScoreNote(1235, 0, 78);
-  note[2][6] = new ScoreNote(1304, 0, 76);
-  
-  note[2][7] = new ScoreNote(1425, 0, 74);
-  note[2][8] = new ScoreNote(1487, 0, 74);
-  note[2][9] = new ScoreNote(1554, 0, 73);
-  note[2][10] = new ScoreNote(1616, 0, 73);
-  note[2][11] = new ScoreNote(1696, 0, 71);
-  note[2][12] = new ScoreNote(1758, 0, 71);
-  note[2][13] = new ScoreNote(1825, 0, 69);
+  note[2][0] = new ScoreNote(913, 69);
+  note[2][1] = new ScoreNote(974, 69);
+  note[2][2] = new ScoreNote(1034, 76);
+  note[2][3] = new ScoreNote(1094, 76);
+  note[2][4] = new ScoreNote(1172, 78);
+  note[2][5] = new ScoreNote(1235, 78);
+  note[2][6] = new ScoreNote(1304, 76);
+
+  note[2][7] = new ScoreNote(1425, 74);
+  note[2][8] = new ScoreNote(1487, 74);
+  note[2][9] = new ScoreNote(1554, 73);
+  note[2][10] = new ScoreNote(1616, 73);
+  note[2][11] = new ScoreNote(1696, 71);
+  note[2][12] = new ScoreNote(1758, 71);
+  note[2][13] = new ScoreNote(1825, 69);
 
   //midibusを管理
   myBus.sendNoteOn(channel, pitch, velocity); // Send a Midi noteOn
@@ -155,37 +160,40 @@ void setup() {
 }
 
 void draw() {
-  	background(0);
+  background(0);
 
-  	//カメラの調整と表示
+ //カメラの調整と表示
+  if (video.available()) 
+  {
     video.read();
-
-    //カメラ映像を回転させて、演奏者の見ているものと同じ映像にする
-    pushMatrix(); 
-    translate(100, 900);
-    rotate(radians(-90));
-    image(video, 10, 10, 640, 540);
-    popMatrix();
-
-    note[note_y][note_x].move_score();//楽譜の一段落のうち弾いている箇所のみ切り抜き
-    image(score, 800, 100, 1142, 681);
-
-    //楽譜の水色▼を表示
-    note[note_y][note_x].blue_triangle(); 
-
-    //ずれ別の色の見本を表示
-    note[note_y][note_x].color_example();
-
-    //その場で弾いた音のずれを表示
-    note[note_y][note_x].real_time_color();
-
-    //音の記録（色と×の表示）
-    note[note_y][note_x].note_recorder();//音のずれ
-    note[note_y][note_x].judgement();//×をつける
-
-    //ミスの回数
-    note[note_y][note_x].sum_false();//ミスのカウントとテキストを表示
   }
+
+  //カメラ映像を回転させて、演奏者の見ているものと同じ映像にする
+  pushMatrix(); 
+  translate(100, 900);
+  rotate(radians(-90));
+  image(video, 10, 10, 640, 540);
+  popMatrix();
+
+  note[note_y][note_x].move_score();//楽譜の一段落のうち弾いている箇所のみ切り抜き
+  image(score, 800, 100, 1142, 681);
+
+  //楽譜の水色▼を表示
+  note[note_y][note_x].blue_triangle(); 
+
+  //ずれ別の色の見本を表示
+  layout.tone_color();
+
+  //その場で弾いた音のずれを表示
+  note[note_y][note_x].real_time_color();
+
+  //音の表示（色と×の表示）
+  layout.note_recorder();//音のずれ
+  note[note_y][note_x].judgement();//×をつける
+
+  //ミスの回数
+  note[note_y][note_x].sum_false();//ミスのカウントとテキストを表示
+}
 
 //midibusを管理している
 void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_name) 
@@ -194,28 +202,28 @@ void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_
   if (((int)(data[0] & 0xFF) >= 224)&&((int)(data[0] & 0xFF) <= 227)) {
     pitchbend = (int)(data[2] & 0xFF) * 128 + (int)(data[1] & 0xFF);
   } 
- for (int i = 1; i < data.length; i++) {
+  for (int i = 1; i < data.length; i++) {
     print(": "+(i+1)+": "+(int)(data[i] & 0xFF));
- }
- for (int i = 1; i < data.length; i++) {
- print(": "+(i+1)+": "+(int)(data[i] & 0xFF));
   }
-if (((int)(data[0] & 0xFF) >= 144)&&((int)(data[0] & 0xFF) <= 171)) {
+  for (int i = 1; i < data.length; i++) {
+    print(": "+(i+1)+": "+(int)(data[i] & 0xFF));
+  }
+  if (((int)(data[0] & 0xFF) >= 144)&&((int)(data[0] & 0xFF) <= 171)) {
     notebus_different = (
-    	(data[1] & 0xFF)-note[note_y][note_x].Number())*333+pitchbend-8192;
+      (data[1] & 0xFF)-note[note_y][note_x].Number())*333+pitchbend-8192;
     note[note_y][note_x].addNote(notebus_different);
   }
-if(((int)(data[0] & 0xFF) >= 143)&&((int)(data[0] & 0xFF) <= 150)) {
-  //println("velocity:" +(int)(data[2] & 0xFF));
-  note_vel = (int)(data[2] & 0xFF);
-}
-if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
+  if (((int)(data[0] & 0xFF) >= 143)&&((int)(data[0] & 0xFF) <= 150)) {
+    //println("velocity:" +(int)(data[2] & 0xFF));
+    note_vel = (int)(data[2] & 0xFF);
+  }
+  if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
     println();
     note_num = note[note_y][note_x].Number();
     now_num = (int)(data[1] & 0xFF);
- 
- if ((int)(data[1] & 0xFF)!=(note[note_y][note_x].Number())) {
-    note[note_y][note_x].judge = 1;      
+
+    if ((int)(data[1] & 0xFF)!=(note[note_y][note_x].Number())) {
+      note[note_y][note_x].miss_count = 1;
     }
     if ((int)(data[1] & 0xFF)==(note[note_y][note_x].Number())) {
       note_x++;
@@ -229,36 +237,35 @@ if (((int)(data[0] & 0xFF) >= 128)&&((int)(data[0] & 0xFF) <= 131)) {
       }
     }
   }
-  if((int)(data[0] & 0xFF) >= 0){
+  if ((int)(data[0] & 0xFF) >= 0) {
     flag = true;
-    if(flag == true){
-    note_number.add(Integer.toString(note_num));
-    now_number.add(Integer.toString(now_num));
-    count.add(hour() + ":" + second() + ":" + minute());
-    note_velocity.add(Integer.toString(note_vel));
-    pitche_bend.add(Integer.toString(notebus_different));
-  }
+    if (flag == true) {
+      note_number.add(Integer.toString(note_num));
+      now_number.add(Integer.toString(now_num));
+      count.add(hour() + ":" + second() + ":" + minute());
+      note_velocity.add(Integer.toString(note_vel));
+      pitche_bend.add(Integer.toString(notebus_different));
+    }
     flag = false;
   }
 }
- 
+
 //webカメラを更新
 void captureEvent(Capture video) {
   video.read();
 }
-  void mouseClicked(){
-    println("mouseX:" + mouseX + "," + "mouseY:" + mouseY);
+void mouseClicked() {
+  println("mouseX:" + mouseX + "," + "mouseY:" + mouseY);
 }
 
 void keyPressed() {
   if (key == 's' || key=='S') { 
-  //txtファイル用
-  //それぞれの行に文字列をファイルへ書き込む。
-  for(int i = 0; i < count.size() ; i++){
-  //result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + tab_number.get(i) + "," + point.x + "," + point.y + "," + count.get(i));
-  result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + count.get(i));
+    //txtファイル用
+    //それぞれの行に文字列をファイルへ書き込む。
+    for (int i = 0; i < count.size(); i++) {
+      //result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + tab_number.get(i) + "," + point.x + "," + point.y + "," + count.get(i));
+      result.add(note_number.get(i) + "," + now_number.get(i) + "," + pitche_bend.get(i) + "," + note_velocity.get(i) + "," + count.get(i));
+    }
+    saveStrings("Violin_System_Test.txt", (String[])result.toArray(new String[result.size()-1]));
+  }
 }
-  saveStrings("Violin_System_Test.txt", (String[])result.toArray(new String[result.size()-1])); 
-}
-}
-

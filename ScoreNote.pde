@@ -1,24 +1,26 @@
-class ScoreNote{
-	private int x;
-	private int judge;
-	private int number;
-	private ArrayList<Integer> played_note = new ArrayList();
-	ScoreNote(int x, int judge, int number){
- 	this.x = x;
- 	this.judge = judge;
- 	this.number = number;
- }
+class ScoreNote {
+  private int x;
+  private int miss_count = 0;
+  private int number;
+  private ArrayList<Integer> played_note = new ArrayList();
 
- public int getX() {
+  ScoreNote(int x, int number) {
+    this.x = x;
+    this.number = number;
+  }
+
+  public int getX() {
     return this.x;
   }
-  public int Judge() {
-    return this.judge;
+  public int get_miss_count() {
+    return this.miss_count;
   }
   public int Number() {
     return this.number;
   }
-public void addNote(int n)
+  
+  
+  public void addNote(int n)
   {
     if (n<-300) {
       n=0;
@@ -69,13 +71,11 @@ public void addNote(int n)
   }
 
   public int getNote(int m) {
-     try{
-      return this.played_note.get(m);
-      }
-      catch (ArrayIndexOutOfBoundsException e){
-       return this.played_note.get(0);
-      }
-    
+    return this.played_note.get(m);
+  }
+  
+  public int get_played_note_size(){
+    return this.played_note.size();
   }
 
   void blue_triangle() {//水色▼の位置と形を管理  
@@ -86,104 +86,66 @@ public void addNote(int n)
     text("▼", 210, 38, 40, 40);
   }
 
-void real_time_color(){//リアルタイムで変化する音の色を表示
-  if (note[note_y][note_x].played_note.size()>=1) {
-      col[note[note_y][note_x].getNote(note[note_y][note_x].played_note.size()-1)].color_rect();
-    rect(200, 160, 30, 30);
-  }
-}
-
-void color_example(){//右上の色の見本を表示
-   for (int i = 0; i < col.length; i++) {
-    col[i].color_rect();
-    rect(1000+i*30, 20, 20, 20);
-  }
-  fill(255);
-  textSize(20);
-  text("low tone", 900, 20, 100, 40);//文字表示
-  text("high tone", 1670, 20, 100, 40);//文字表示  
-}
-
- void note_recorder(){
-  if ((note_x>=0) && (note_y>=0)) {//音が入力されていることが前提
-    for (int i=0; i<note_x; i++) {//現在演奏している段落のみの色表示
-      try{
-      col[note[note_y][i].getNote(0)].color_rect();//最初の音のずれの色を採用
-      }
-      catch (NullPointerException e){
-        fill(87, 175, 79);
-      }
-      
-      rect(note[note_y][i].getX(), 360+212*note_y, 20, 20);//音のずれを表示
-    }
-    for (int j = 0; j <= note_y-1; j++) {
-      for (int i = 0; i < 14; i++) {//現在演奏しているよりも前の色表示
-        try{
-        col[note[j][i].getNote(0)].color_rect();//最初の音のずれの色を採用
-      }catch (NullPointerException e){
-        fill(87, 175, 79);
-      }
-        rect(note[note_y][i].getX(), 360+212*j, 20, 20);//音のずれを表示
-      }
+  void real_time_color() {//リアルタイムで変化する音の色を表示
+    if (this.played_note.size()>=1) {
+      col[this.played_note.get(this.played_note.size()-1)].color_rect();
+      rect(200, 160, 30, 30);
     }
   }
- }
 
-  void judgement(){
-  if ((note_x>=0) && (note_y>=0)) {//音が入力されていることが前提
-    for (int i=0; i<note_x; i++) {//現在演奏している段落のみの色表示
-      if (note[note_y][i].judge>=1) {
-        fill(255);
-        textSize(25);
-        text("×", note[note_y][i].getX(), 250+212*note_y, 40, 40);
-      }
-    }
-    for (int j = 0; j <= note_y-1; j++) {
-      for (int i = 0; i < 14; i++) {//現在演奏しているよりも前の色表示
-       if (note[j][i].judge>=1) {
+  void judgement() {
+    if ((note_x>=0) && (note_y>=0)) {//音が入力されていることが前提
+      for (int i=0; i<note_x; i++) {//現在演奏している段落のみの色表示
+        if (note[note_y][i].miss_count>=1) {
           fill(255);
           textSize(25);
-          text("×", note[note_y][i].getX(), 250+212*j, 40, 40);
+          text("×", note[note_y][i].getX(), 250+212*note_y, 40, 40);
+        }
+      }
+      for (int j = 0; j <= note_y-1; j++) {
+        for (int i = 0; i < 14; i++) {//現在演奏しているよりも前の色表示
+          if (note[j][i].miss_count>=1) {
+            fill(255);
+            textSize(25);
+            text("×", note[note_y][i].getX(), 250+212*j, 40, 40);
+          }
         }
       }
     }
   }
-}
 
-void sum_false(){
-  int sum = 0;
-  for (int i = 0; i < note.length; i++) {
-    for (int j=0; j < note[i].length-1; j++) {
-      if (note[i][j].judge == 1) {
-        sum++;
+  void sum_false() {
+    int sum = 0;
+    for (int i = 0; i < note.length; i++) {
+      for (int j=0; j < note[i].length-1; j++) {
+        if (note[i][j].miss_count == 1) {
+          sum++;
+        }
       }
-  }
     }
     fill(255);
     textSize(25);
     text(sum+"/32", 1000, 955);
-}
-
-void move_score(){
-   if ((note_x>=0) &&(note_y>=0)) {
-    if ((move == true)) {
-      moving+=0.9;
-    }
-    if (moving >= 12.58) {
-      moving = 0.0;
-      move = false;
-    }
   }
-  score_top = score_top - moving;
-  
-  image(part_score, score_top, 50, 3778, 148);//移動する楽譜の第1連
-  noStroke();
-  fill(0);
-  rect(0,40,70,218);
-  rect(700,40,displayWidth-700,218);
-  image(left_grad, 70, 40, 88, 178); //グラデーション左を配置
- image(right_grad, 700, 40, 88, 178);//グラデーション右を配置
 
-}
+  void move_score() {
+    if ((note_x>=0) &&(note_y>=0)) {
+      if ((move == true)) {
+        moving+=0.9;
+      }
+      if (moving >= 12.58) {
+        moving = 0.0;
+        move = false;
+      }
+    }
+    score_top = score_top - moving;
 
+    image(part_score, score_top, 50, 3778, 148);//移動する楽譜の第1連
+    noStroke();
+    fill(0);
+    rect(0, 40, 70, 218);
+    rect(700, 40, displayWidth-700, 218);
+    image(left_grad, 70, 40, 88, 178); //グラデーション左を配置
+    image(right_grad, 700, 40, 88, 178);//グラデーション右を配置
+  }
 }
